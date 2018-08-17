@@ -27,7 +27,7 @@ angular.module('myApp.event_edit', ['ngRoute', 'ngMaterial'])
         $scope.rep_day_week = response.rep_day_week;
         $scope.rep_day_month = response.rep_day_month;
         $scope.rep_stop_date = response.rep_stop_date;
-        $scope.all_day = response.isFullDay;
+        $scope.all_day = response.isFullDay === 1;
         $scope.amount = response.amount;
     });
 

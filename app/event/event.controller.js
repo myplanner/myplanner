@@ -29,8 +29,15 @@ angular.module('myApp.event', ['ngRoute', 'ngMaterial'])
         if ($scope.eventTitle === "") { $scope.errorMessage = "Event title required"; return;}
         if ($scope.rep_day_week === "") { $scope.rep_day_week = null; }
         if ($scope.rep_day_month === "") { $scope.rep_day_month = null; }
-        if ($scope.eventType !== "event") { $scope.all_day = true; $scope.endDate = $scope.eventDate; }
+        if ($scope.eventType !== "event") {
+            $scope.all_day = true;
+            $scope.endDate = $scope.eventDate;
+        }
         if (new Date($scope.endDate) < new Date($scope.eventDate)) { $scope.endDate = $scope.eventDate; }
+        if ($scope.all_day === true) {
+            $scope.eventTime = new Date(new Date().toDateString() +  "00:00");
+            $scope.endTime = new Date(new Date().toDateString() + "00:00");
+        }
         let eventSubmit = {
             user_id: user_id,
             start_datetime: datetimeFormatter($scope.eventDate, $scope.eventTime),

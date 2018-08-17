@@ -68,6 +68,7 @@ angular.module('myApp.calendar', ['ngRoute'])
                 //let userTimezoneOffset = dateStart.getTimezoneOffset() * 60000;
                 let fullDay = event.isFullDay;
                 let repeats = (event.rep_day_week || event.rep_day_month) ? true : false;
+
                 $scope.events.push({
                     event_id : event.event_id,
                     title: event.title,
@@ -106,12 +107,15 @@ angular.module('myApp.calendar', ['ngRoute'])
     };
 
     $scope.deleteEvent = function(event_id){
-        console.log("in delete function");
-        console.log(event_id);
         $http.delete('/calendar_events/' + event_id, null).then(function(response){
-            console.log("in delete function");
-                    /* Redirect to view1 page */
-                    $route.reload();
+            if(response.status !== 204){ alert("There was a problem deleting the event");}
+            else {
+                let toRemove = $scope.events.filter(event => event.event_id === event_id);
+                toRemove.forEach(function(){
+                    $scope.events.splice($scope.events.findIndex(event => event.event_id === event_id), 1);
+                });
+                $scope.SelectedEvent = null;
+            }
         });
     };
 
@@ -193,7 +197,7 @@ angular.module('myApp.calendar', ['ngRoute'])
             let selectedYear = $scope.selectedDate.getFullYear();
 
             if((start.getFullYear() > selectedYear || (start.getFullYear() === selectedYear && start.getMonth() > selectedMonth))
-                || (stop !== null && ((stop.getFullYear() < selectedYear) || (stop.getFullYear() === selectedYear && stop.getMonth() < selectedMonth)))){
+                || (stop !== null && (!event.rep_day_week && !event.rep_day_month) && ((stop.getFullYear() < selectedYear) || (stop.getFullYear() === selectedYear && stop.getMonth() < selectedMonth)))){
                 toRemove.push(event.event_id);
             }
         });
@@ -217,6 +221,7 @@ angular.module('myApp.calendar', ['ngRoute'])
             }
             else if (event.rep_day_month){ //IF REPEATS BASED ON DAY OF THE MONTH
                 event.start_datetime = new Date($scope.selectedDate.getFullYear(), $scope.selectedDate.getMonth(), event.rep_day_month);
+                event.end_datetime = new Date($scope.selectedDate.getFullYear(), $scope.selectedDate.getMonth(), event.rep_day_month);
             }
         });
         toRemove.forEach(function(id){
@@ -240,10 +245,12 @@ angular.module('myApp.calendar', ['ngRoute'])
         let tmpDate = new Date($scope.selectedDate.getFullYear(), $scope.selectedDate.getMonth(), 1);
         let month = tmpDate.getMonth();
         let eventStorage = [];
+        let rep_stop = (event.rep_stop_date) ? new Date(event.rep_stop_date) : new Date('12-31-9999');
         while (tmpDate.getMonth() === month){
             //If the day of week matches, create a duplicate event in storage and change the start date to the discovered date
             if (tmpDate.getDay() === weekdayNumberConversion[event.rep_day_week]
-            && tmpDate <= new Date(event.rep_stop_date)) {
+            && tmpDate <= rep_stop
+            && tmpDate >= new Date(event.start_datetime)) {
                 let tmpEvent = Object.assign({}, event); //Cloning object so it doesn't alter existing ones
                 tmpEvent.start_datetime = new Date(tmpDate.getFullYear(),tmpDate.getMonth(),tmpDate.getDate());
                 tmpEvent.end_datetime = new Date(tmpDate.getFullYear(),tmpDate.getMonth(),tmpDate.getDate());
