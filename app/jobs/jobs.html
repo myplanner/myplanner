@@ -113,19 +113,19 @@
                 <div class="form-group">
                     <label>Retirement:</label>
                     <input type="number" class="form-control"
-                           id="add-pay-retirement" placeholder="retirement" name="retirement" required/>
+                           id="add-pay-retirement" placeholder="retirement percentage" name="retirement" required/>
                 </div>
                
                 <div class="form-group">
                     <label>Pretax:</label>
                     <input type="number" class="form-control"
-                           id="add-pay-pretax" placeholder="pretax" name="pretax" required/>
+                           id="add-pay-pretax" placeholder="other pretax deduction" name="pretax" required/>
                 </div>
 
                 <div class="form-group">
                     <label>Posttax:</label>
                     <input type="number" class="form-control"
-                           id="add-pay-posttax" placeholder="posttax" name="posttax" required/>
+                           id="add-pay-posttax" placeholder="other posttax deduction" name="posttax" required/>
                 </div>
 
 
@@ -171,8 +171,7 @@
         <form role="form">
         <div class="modal-body">
             <div>
-                <label>Job ID</label>
-                <input id="up-job-id" disabled="disabled" class="form-control" value="{{update_jobID}}">
+                <input id="up-job-id" type="hidden" class="form-control" value="{{update_jobID}}">
             </div>
             <div class="form-group">
                 <label>Job Title :</label>
@@ -208,19 +207,19 @@
             <div class="form-group">
                 <label>Retirement:</label>
                 <input class="form-control"
-                       id="up-pay-retirement" placeholder="retirement" name="retirement" value="{{update_retirement}}" required/>
+                       id="up-pay-retirement" placeholder="retirement 401k percentage" name="retirement" value="{{update_retirement}}" required/>
             </div>
            
             <div class="form-group">
                 <label>Pretax:</label>
                 <input class="form-control"
-                       id="up-pay-pretax" placeholder="pretax" name="pretax" value="{{update_preTax}}" required/>
+                       id="up-pay-pretax" placeholder="other pretax deduction" name="pretax" value="{{update_preTax}}" required/>
             </div>
 
             <div class="form-group">
                 <label>Posttax:</label>
                 <input class="form-control"
-                       id="up-pay-posttax" placeholder="posttax" name="posttax" value="{{update_postTax}}" required/>
+                       id="up-pay-posttax" placeholder="other posttax deduction" name="posttax" value="{{update_postTax}}" required/>
             </div>
 
 
@@ -245,7 +244,3 @@
 </div>
 </div>
 </div>
-
-
-
-

@@ -72,11 +72,11 @@ angular.module('myApp.jobs', ['ngRoute'])
                  $scope.update_frequency = response.frequency;
                  $scope.update_payRate = response.wage;
                  $scope.update_allowances = response.allowances;
+                 $scope.update_retirement = response.retirement_percent;
+                 $scope.update_postTax = response.posttax_static;
+                 $scope.update_preTax = response.pretax_static;
                  $scope.update_fedTaxes = response.fed_tax_rate;
                  $scope.update_localTaxes = response.loc_tax_rate;
-                 $scope.update_retirement = response.retirement;
-                 $scope.update_postTax = response.posttax;
-                 $scope.update_preTax = response.pretax;
              }
          })
      };
